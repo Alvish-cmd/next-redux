@@ -1,10 +1,20 @@
-import Image from 'next/image'
-
 import store from './redux/store'
-
+import { bugAdded, bugRemoved, bugResolved} from './action'
 
 export default function Home() {
-  console.log(store.getState());
+
+ const unsubscribe =  store.subscribe(()=> {
+    console.log("store changed!",store.getState());
+    
+  })
+
+  store.dispatch(bugAdded("Bug 1"))
+
+  store.dispatch(bugResolved(1));
+
+  unsubscribe();
+
+  console.log(store.getState());   
 
   return (
     <div>Hello</div>
